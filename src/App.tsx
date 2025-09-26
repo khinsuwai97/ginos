@@ -1,9 +1,11 @@
 import Pizza from "./Pizza";
+import Order from "./Order";
 const App = () => {
   return (
     <div>
       <h1>Padre Ginos's - Order Now</h1>
-      <Pizza
+      <Order />
+      {/* <Pizza
         name="Pepperoni"
         description="Mozzarella Cheese, Pepperoni"
         image={"/public/pizzas/pepperoni.webp"}
@@ -17,7 +19,7 @@ const App = () => {
         name="The Big Meat Pizza"
         description="Bacon, Pepperoni, Italian Sausage, Chorizo Sausage"
         image={"/public/pizzas/big_meat.webp"}
-      />
+      /> */}
     </div>
   );
 };
