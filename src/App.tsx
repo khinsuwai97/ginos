@@ -1,10 +1,12 @@
 import Pizza from "./Pizza";
 import Order from "./Order";
+import PizzaOfTheDay from "./PizzaOfTheDay";
 const App = () => {
   return (
     <div>
-      <h1>Padre Ginos's - Order Now</h1>
+      <h1 className="logo">Padre Ginos's - Order Now</h1>
       <Order />
+      <PizzaOfTheDay />
       {/* <Pizza
         name="Pepperoni"
         description="Mozzarella Cheese, Pepperoni"
