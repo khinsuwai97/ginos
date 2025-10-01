@@ -1,21 +1,28 @@
 import { useState, useEffect } from "react";
-import Pizza from "./Pizza";
+import Pizza from "../Pizza";
+import Cart from "../Cart";
+import { useContext } from "react";
+import { CartContext } from "../contexts";
+import { createLazyFileRoute } from "@tanstack/react-router";
+import { currencyConverter } from "../currencyConverter";
 
-export default function Order() {
+export const Route = createLazyFileRoute("/order")({
+  component: Order,
+});
+
+function Order() {
   const [pizzaType, setPizzaType] = useState("pepperoni");
   const [pizzaSize, setPizzaSize] = useState("M");
   const [pizzaTypes, setPizzaTypes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [cart, setCart] = useContext(CartContext);
 
-  const intl = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
+  
 
   let price, selectedPizza;
   if (!loading) {
     selectedPizza = pizzaTypes.find((d: any) => d.id === pizzaType);
-    price = intl.format(selectedPizza?.sizes[pizzaSize]);
+    price = currencyConverter(selectedPizza?.sizes[pizzaSize])
   }
 
   async function fetchPizzaTypes() {
@@ -29,10 +36,32 @@ export default function Order() {
     fetchPizzaTypes();
   }, []);
 
+  async function checkout() {
+    setLoading(true);
+
+    await fetch("/api/order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        cart,
+      }),
+    });
+
+    setCart([]);
+    setLoading(false);
+  }
+
   return (
     <div className="order">
       <h2>Create Order</h2>
-      <form>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          setCart([...cart, { pizza: selectedPizza, size: pizzaSize, price }]);
+        }}
+      >
         <div>
           <div>
             <label htmlFor="pizza-type">Pizza Type</label>
@@ -101,6 +130,11 @@ export default function Order() {
 
           <p>{price}</p>
         </div>
+        {loading ? (
+          <h2>Loading...</h2>
+        ) : (
+          <Cart cart={cart} checkout={checkout} />
+        )}
       </form>
     </div>
   );

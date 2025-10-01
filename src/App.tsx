@@ -1,28 +1,14 @@
-import Pizza from "./Pizza";
-import Order from "./Order";
-import PizzaOfTheDay from "./PizzaOfTheDay";
+import { RouterProvider, createRouter } from "@tanstack/react-router";
+import { routeTree } from "./routeTree.gen";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const router = createRouter({ routeTree });
+const queryClient = new QueryClient();
 const App = () => {
   return (
-    <div>
-      <h1 className="logo">Padre Ginos's - Order Now</h1>
-      <Order />
-      <PizzaOfTheDay />
-      {/* <Pizza
-        name="Pepperoni"
-        description="Mozzarella Cheese, Pepperoni"
-        image={"/public/pizzas/pepperoni.webp"}
-      />
-      <Pizza
-        name="The Hawaiian Pizza"
-        description="Sliced Ham, Pineapple, Mozzarella Cheese"
-        image={"/public/pizzas/hawaiian.webp"}
-      />
-      <Pizza
-        name="The Big Meat Pizza"
-        description="Bacon, Pepperoni, Italian Sausage, Chorizo Sausage"
-        image={"/public/pizzas/big_meat.webp"}
-      /> */}
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   );
 };
 
