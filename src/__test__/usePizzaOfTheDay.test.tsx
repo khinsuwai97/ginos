@@ -37,7 +37,7 @@ function getPizzaOfTheDay() {
 
 test("to be null on initial load", async () => {
   fetchMocker.mockResponseOnce(JSON.stringify(testPizza));
-  const { result } = renderHook(() => usePizzaOfTheDay("lol"));
+  const { result } = renderHook(() => usePizzaOfTheDay());
   expect(result.current).toBeNull();
 });
 

@@ -6,5 +6,8 @@ export default defineConfig({
   plugins: [react(), TanStackRouterVite()],
   test: {
     environment: "happy-dom",
+    coverage: {
+      reporter: ["text", "json", "html"],
+    },
   },
 });

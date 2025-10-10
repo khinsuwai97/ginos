@@ -16,7 +16,7 @@ interface CartProps {
   //   price: string;
   // }>;
   cart: any[];
-  checkout: () => void;
+  checkout?: () => void;
 }
 
 const Cart = ({ cart, checkout }: CartProps) => {
